@@ -8,9 +8,9 @@
 
 |이름|역할|개인 깃허브|
 |-|-|-|
-|강인혁|머신러닝 모델 개발|[링크](https://github.com/InhyeokKang)|
-|이환주|머신러닝 모델 개발||
-|이민규|보드 관련 개발|[링크](https://github.com/LEEMINGYUU)|
+|강인혁|인공지능|[링크](https://github.com/InhyeokKang)|
+|이환주|인공지능|
+|이민규|IOT|[링크](https://github.com/LEEMINGYUU)|
 
 ### 3. 프로젝트 개요
 

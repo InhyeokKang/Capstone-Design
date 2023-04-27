@@ -1,8 +1,3 @@
-# Last updated on: 2019-09-27
-
-#!/usr/bin/env python
-# test BLE Scanning software
-# jcs 6/8/2014
 import blescan
 import sys
 import bluetooth._bluetooth as bluez
@@ -85,17 +80,21 @@ sheet1.cell(row=1, column=6).value = 'Accuracy'
 sheet1.cell(row=1, column=7).value = 'yyyy-mm-dd h:m:s)'
 wb.save(start_time + '.xlsx')
 
+SAVE_FILE_INTERVAL = 5  # 데이터 파일 저장 주기 (초)
+
+row_count = 1  # 엑셀 파일에 쓴 행 수
+
 time_check = time.time()
 
 while True:
-	#print 'working?'
-        returnedList = blescan.parse_events(sock, 10)
-        #print 'working?2'
-        for beacon in returnedList:
-            #print(beacon)
-            beacon_split = beacon.split(',')
-            if beacon_split[3] in ["31199"]:
-                sheet1.append([beacon_split[0], beacon_split[2], beacon_split[3], beacon_split[5], beacon_split[4], conn.calcualte_distance_rssi(beacon_split[4],beacon_split[5]), time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))])
-                wb.save(start_time + '.xlsx')
-        print
-
+    returnedList = blescan.parse_events(sock, 10)
+    for beacon in returnedList:
+        beacon_split = beacon.split(',')
+        if beacon_split[3] in ["31142"]:
+            sheet1.append([beacon_split[0], beacon_split[2], beacon_split[3], beacon_split[5], beacon_split[4], conn.calcualte_distance_rssi(beacon_split[4],beacon_split[5]), time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))])
+            row_count += 1
+    
+    # 일정 시간이 지나면 데이터를 파일에 저장
+    if time.time() - time_check > SAVE_FILE_INTERVAL:
+        wb.save(start_time + '.xlsx')
+        time_check = time.time()
